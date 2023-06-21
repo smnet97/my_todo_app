@@ -1,5 +1,33 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        {{ task.task_name }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Task description</h5>
+                        <p class="card-text">{{ task.description }}</p>
+                        <div class="d-flex justify-content-between">
+                            <span>Created at: {{ task.created_at|date:"d m Y f A" }}</span>
+                            <span>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value=""
+                                         id="flexCheckIndeterminateDisabled" {% if task.task_status %} checked
+                                  {% endif %}  disabled>
+                                  <label class="form-check-label" for="flexCheckIndeterminateDisabled">
+                                    Task status
+                                  </label>
+                                </div>
+                            </span>
+                        </div>
+                        <a href="{% url 'todo_list' %}" class="btn btn-primary">back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
