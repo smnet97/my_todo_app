@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from .forms import CreateTodoModelForm, EditTodoModelForm
 from .models import TodoModel
+from django.contrib.auth.decorators import login_required
 
 
+def home_view(request):
+    return render(request, 'main/home_page.html')
+
+
+@login_required
 def todo_check_view(request, id):
     obj = TodoModel.objects.all().get(id=id)
     if obj.task_status:
@@ -13,6 +19,7 @@ def todo_check_view(request, id):
     return redirect('todo_list')
 
 
+@login_required
 def todo_edit_view(request, id):
     obj = TodoModel.objects.all().get(id=id)
     if request.method == 'POST':
@@ -27,6 +34,7 @@ def todo_edit_view(request, id):
     })
 
 
+@login_required
 def todo_detail_view(request, id):
     obj = TodoModel.objects.all().get(id=id)
     return render(request, 'main/todo_detail.html', context={
@@ -34,15 +42,19 @@ def todo_detail_view(request, id):
     })
 
 
+@login_required
 def todo_delete_view(request, id):
     print(id)
     TodoModel.objects.all().filter(id=id).delete()
     return redirect('todo_list')
 
 
+@login_required
 def todo_list_view(request):
     q = request.GET.get('q', '')
-    todos = TodoModel.objects.all()
+
+    todos = TodoModel.objects.all().filter(user=request.user)
+
     if q:
         todos = todos.filter(task_name__icontains=q)
 
@@ -52,13 +64,16 @@ def todo_list_view(request):
     })
 
 
+@login_required
 def todo_create_view(request):
     form = CreateTodoModelForm()
     if request.method == 'POST':
 
         form = CreateTodoModelForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            data = form.save(commit=False)
+            data.user = request.user
+            data.save()
             return redirect('todo_list')
 
     return render(request, 'main/todo_create.html', context={

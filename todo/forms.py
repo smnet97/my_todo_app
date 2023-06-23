@@ -1,13 +1,14 @@
-from django.forms import ModelForm
+from django import forms
 from .models import TodoModel
 
-class EditTodoModelForm(ModelForm):
 
+class EditTodoModelForm(forms.ModelForm):
     class Meta:
         model = TodoModel
         fields = ['task_name', 'description']
 
-class CreateTodoModelForm(ModelForm):
+
+class CreateTodoModelForm(forms.ModelForm):
     class Meta:
         model = TodoModel
         fields = ['task_name', 'description']

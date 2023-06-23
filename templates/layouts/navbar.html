@@ -7,15 +7,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="{% url 'todo_create' %}">Todo create</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'registration' %}">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'todo_create' %}">Todo
+                            create</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'logout' %}">Logout {{ request.user }}</a>
+                    </li>
+                {% endif %}
+
             </ul>
             <form class="d-flex" role="search" method="get">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{ q }}" name="q">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{ q }}"
+                       name="q">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
