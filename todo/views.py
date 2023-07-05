@@ -37,8 +37,10 @@ def todo_edit_view(request, id):
 @login_required
 def todo_detail_view(request, id):
     obj = TodoModel.objects.all().get(id=id)
+    text = ""
     return render(request, 'main/todo_detail.html', context={
-        'task': obj
+        'task': obj,
+        'text': text
     })
 
 

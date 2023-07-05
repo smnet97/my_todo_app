@@ -10,9 +10,10 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Task description</h5>
-                        <p class="card-text">{{ task.description }}</p>
+                        <p class="card-text">{{ task.description|safe }}</p>
                         <div class="d-flex justify-content-between">
                             <span>Created at: {{ task.created_at|date:"d m Y f A" }}</span>
+                            {{ text|default_if_none:'asdasd' }}
                             <span>
                                 <div class="form-check">
                                   <input class="form-check-input" type="checkbox" value=""

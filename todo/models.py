@@ -1,11 +1,19 @@
 from django.db import models
 from user.models import UserModel
+from ckeditor.fields import RichTextField
+
+
+class CategoryModel(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class TodoModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.RESTRICT)
     task_name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField()
     task_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

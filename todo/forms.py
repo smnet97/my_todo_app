@@ -1,5 +1,6 @@
 from django import forms
 from .models import TodoModel
+from ckeditor.widgets import CKEditorWidget
 
 
 class EditTodoModelForm(forms.ModelForm):

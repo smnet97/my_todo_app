@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
-        <a class="navbar-brand text-white" href="#">Todo app</a>
+        <a class="navbar-brand text-white" href="{% url 'todo:home' %}">Todo app</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -16,20 +16,35 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="{% url 'todo_create' %}">Todo
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'todo:todo_create' %}">Todo
                             create</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'logout' %}">Logout {{ request.user }}</a>
+                        <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'todo:todo_list' %}">Todo list</a>
+                    </li>
+                    {% if not request.path == '/user/profile/' %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
 
             </ul>
-            <form class="d-flex" role="search" method="get">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{ q }}"
-                       name="q">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            {% if request.path == '/todo/list/' %}
+                <form class="d-flex" role="search" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           value="{{ q }}"
+                           name="q">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <img src="{{ request.user.user_img.url }}" width="60" height="60" class="rounded-circle ms-3"></img>
+            {% endif %}
+
         </div>
     </div>
 </nav>

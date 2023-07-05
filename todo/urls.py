@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import todo_list_view, todo_create_view, todo_delete_view, todo_detail_view, todo_edit_view, todo_check_view, home_view
 
+app_name = 'todo'
+
 urlpatterns = [
     path('', home_view, name='home'),
     path('todo/list/', todo_list_view, name='todo_list'),

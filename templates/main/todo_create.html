@@ -12,6 +12,7 @@
                         <form action="{% url 'todo_create' %}" method="post">
                             {% csrf_token %}
                             {{ create_form|crispy }}
+                            {{ create_form.media }}
                             <button class="btn btn-success px-5 py-2" type="submit">Create</button>
                         </form>
                     </div>
